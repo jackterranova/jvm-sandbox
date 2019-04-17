@@ -20,11 +20,29 @@ If the logging does not supply the type of GC, `-XX:+PrintCommandLineFlags` will
 
 GC logging in `Java 8` does not explicitly state GC type - use `-XX:+PrintCommandLineFlags`
 
+### In the previous branch (01-verbose-gc-setup)
+
+** Summary **
+
+`-verbose:gc` the most basic way to log gc 
+`-XX:+PrintGCDetails` a more detailed way to log gc
+`-XX:+PrintCommandLineFlags` will print command line options both default and explicitly set params
+`Parallel GC` default gc used in `Java 8`
+`GC (Allocation Failure)` logging that indicates a `minor GC`
+`Minor GC` reclaiming of heap occupied by young generation objects
+`Full GC` reclaiming both old and young gen heap  
+`G1` default gc used in Java 12 
+
 ### On this branch
 
-This is a just a setup of running a program that attempts to use some memory and see what happens during GC if GC actually happens.
+We will dig deeper in to the details of the `Java 8` `Parallel GC` output.  
 
-In subsequent branches, we'll make the program more memory intensive, use different GC implementations and add instrumentation.
+* We specify `Xmx1m` yet we see the total heap space to be 1.5M.  Why is this?  
+
+* What exactly is our test program doing?  How much memory is being consumed in the loop? 
+
+* Why is GC happening at 500k/800k points? 
+
 
 ### Results of this branch
 
