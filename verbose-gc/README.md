@@ -52,10 +52,8 @@ GC logging in `Java 8` does not explicitly state GC type - use `-XX:+PrintComman
 
 ### On this branch
 
-We will dig deeper in to the details of the `Java 8` `Parallel GC` output.  
-
-* We specify `Xmx1m` yet we see the total heap space to be 1.5M.  Why is this?  
-
+We will dig deeper in to the details of the `Java 8` `Parallel GC` output and `Java 12` `GC1` output.  
+  
 ### Results of this branch
 
 A few interesting things to note from the output:
@@ -92,6 +90,7 @@ This error is self explanatory, but not necessarily the cause.  Most likely `Jav
 
 ### Questions   
 
+* We specify `Xmx1m` yet we see the total heap space to be 1.5M.  Why is this?
 * What exactly is our test program doing?  
 * How much memory is being consumed in the loop? 
 * Why is GC happening at 500k/800k points? 
