@@ -4,6 +4,23 @@ Exploring verbose GC and affects of heap size.
 
 Particularly interesting are the differences in both output format and results between JVM versions (like 8 vs 12).
 
+### GC overview
+
+JVM memory is divided in to 3 parts
+
+    * Young gen
+      * Eden
+      * Survivor 1
+      * Survivor 2
+    * Old gen
+    * Perm gen (static data and meta data related to class-loaded classes)
+    
+Is this ^^^ all still true in Java 8?  
+  
+* In Java 8, `Metaspace` replaces `Perm Gen`
+* `PermGen` was notorious for causing `OutOfMemoryException`.  `PermGen` was always limited in size relative to the heap and thus class loaders were not properly GC'ed 
+* `Metaspace` will grow automatically when needed.  GC of class loading also improved.
+
 ### GC Flags
 
 The default GC implementation usually changes from JVM version to JVM version.
@@ -39,14 +56,11 @@ We will dig deeper in to the details of the `Java 8` `Parallel GC` output.
 
 * We specify `Xmx1m` yet we see the total heap space to be 1.5M.  Why is this?  
 
-* What exactly is our test program doing?  How much memory is being consumed in the loop? 
-
-* Why is GC happening at 500k/800k points? 
-
-
 ### Results of this branch
 
 A few interesting things to note from the output:
+
+__Java 8__
 
 `Java 8` by default uses the `Parallel GC`, we see a lot of  
 
@@ -59,6 +73,8 @@ A few interesting things to note from the output:
 The output also shows how much space was cleared by the GC.  In this case occupied heap was reduced from 512k to 376k.  1536K is the capacity of the heap and you can see its the same all the way down.
 
 Additionally you see that the Young Generation space was reduced from 512k to 368k with a 1024k partition size. 
+
+__Java 12__
 
 With `Java 12`, we can't even get the application to run.
 
@@ -74,6 +90,11 @@ And with 2M max heap ...
 
 This error is self explanatory, but not necessarily the cause.  Most likely `Java 12` just uses more memory.      
 
+### Questions   
+
+* What exactly is our test program doing?  
+* How much memory is being consumed in the loop? 
+* Why is GC happening at 500k/800k points? 
 
 ### Raw output of this branch
 
